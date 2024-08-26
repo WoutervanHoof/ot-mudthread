@@ -60,7 +60,7 @@
 #include "common/code_utils.hpp"
 #include "utils/system_utils.hpp"
 
-#include "curl/curl.h"
+// #include "curl/curl.h"
 
 #include "../../third_party/rapidjson/repo/include/rapidjson/document.h"
 #include "../../third_party/rapidjson/repo/include/rapidjson/writer.h"
@@ -268,28 +268,6 @@ namespace otbr {
       {
          // Start file download
          otbrLogInfo("Starting download of: %s", url.c_str());
-
-         CURL *curl;
-
-         CURLcode res;
-         curl = curl_easy_init();                                                                                                                                                                                                                                                           
-         if (curl)
-         {   
-            curl_easy_setopt(curl, CURLOPT_URL, url);
-            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, target.write);
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, target);
-            
-            otbrLogInfo("Downloading file");
-            res = curl_easy_perform(curl);
-            curl_easy_cleanup(curl);
-
-            if ! res {
-               otbrLogInfo("Download succeeded!");
-               return true;
-            } 
-         }
-         
-         tbrLogErr("Error: %s", error.what());
 
          return false;
       }
