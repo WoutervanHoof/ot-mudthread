@@ -26,5 +26,5 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 #
 
-ADD_SUBDIRECTORY(repo) # Change `ext/curlcpp` to a directory according to your setup
+ADD_SUBDIRECTORY(repo2) # Change `ext/curlcpp` to a directory according to your setup
 INCLUDE_DIRECTORIES(${CURLCPP_SOURCE_DIR}/include)

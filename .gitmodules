@@ -1,0 +1,3 @@
+[submodule "ot-br-posix/third_party/curlcpp/repo2"]
+	path = ot-br-posix/third_party/curlcpp/repo2
+	url = https://github.com/JosephP91/curlcpp.git
