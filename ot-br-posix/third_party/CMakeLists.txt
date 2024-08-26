@@ -34,5 +34,4 @@ endif()
 
 if(OTBR_MUD_MANAGER)
     add_subdirectory(rapidjson)
-    add_subdirectory(curlcpp)
 endif()

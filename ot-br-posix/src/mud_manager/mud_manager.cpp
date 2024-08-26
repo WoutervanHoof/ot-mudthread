@@ -60,10 +60,7 @@
 #include "common/code_utils.hpp"
 #include "utils/system_utils.hpp"
 
-#include "../../third_party/curlcpp/repo/include/curl_easy.h"
-#include "../../third_party/curlcpp/repo/include/curl_form.h"
-#include "../../third_party/curlcpp/repo/include/curl_ios.h"
-#include "../../third_party/curlcpp/repo/include/curl_exception.h"
+#include "curl/curl.h"
 
 #include "../../third_party/rapidjson/repo/include/rapidjson/document.h"
 #include "../../third_party/rapidjson/repo/include/rapidjson/writer.h"
@@ -273,29 +270,29 @@ namespace otbr {
          // Start file download
          otbrLogInfo("Starting download of: %s", url.c_str());
 
-         // Create buffer writer for output to variable
-         curl_ios<ostringstream> writer(*target);
-    
-         curl_easy easy(writer);
-         easy.add<CURLOPT_URL>(url.c_str());
-         easy.add<CURLOPT_FOLLOWLOCATION>(1L);
+         CURL *curl;
 
-         try
-         {
+         CURLcode res;
+         curl = curl_easy_init();                                                                                                                                                                                                                                                           
+         if (curl)
+         {   
+            curl_easy_setopt(curl, CURLOPT_URL, url);
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, target.write);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, target);
+            
             otbrLogInfo("Downloading file");
+            res = curl_easy_perform(curl);
+            curl_easy_cleanup(curl);
 
-            easy.perform();
-
-            otbrLogInfo("Download succeeded!");
-
-            return true;
+            if ! res {
+               otbrLogInfo("Download succeeded!");
+               return true;
+            } 
          }
-         catch (curl_easy_exception &error)
-         {
-            otbrLogErr("Error: %s", error.what());
+         
+         tbrLogErr("Error: %s", error.what());
 
-            return false;
-         }
+         return false;
       }
 
       bool MudManager::ParseMUDFile(MUDFile *trgt, ostringstream* src, string ip)
