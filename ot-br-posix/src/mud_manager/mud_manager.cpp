@@ -66,7 +66,6 @@
 #include "../../third_party/rapidjson/repo/include/rapidjson/writer.h"
 #include "../../third_party/rapidjson/repo/include/rapidjson/stringbuffer.h"
 
-using namespace curl;
 using namespace rapidjson;
 using namespace std;
 
