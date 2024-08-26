@@ -72,7 +72,7 @@ using namespace std;
 
 namespace otbr {
     namespace MUD {
-      ostringstream mud_signature;
+      std::ostringstream mud_signature;
       
       std::string file_folder = "/home/pi/ot-br-posix/mud";
       char iptables_file[] =  "/home/pi/ot-br-posix/mud/acl.sh";
