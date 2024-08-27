@@ -48,6 +48,7 @@
 #include <ostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 #include <ctime>
 
