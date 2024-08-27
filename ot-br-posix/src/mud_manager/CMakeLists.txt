@@ -34,7 +34,6 @@ add_library(otbr-mud-manager
 target_link_libraries(otbr-mud-manager PRIVATE
     otbr-common
     otbr-utils
-    crypto
     pthread
     curl
 )
