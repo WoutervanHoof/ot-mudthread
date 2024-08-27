@@ -265,12 +265,10 @@ namespace otbr {
       }
 
 
-      bool MudManager::RetrieveFile(ostringstream *target, string url)
+      bool MudManager::RetrieveFile(__attribute__((unused)) ostringstream *target, string url)
       {
          // Start file download
          otbrLogInfo("Starting download of: %s", url.c_str());
-
-         (void*) target;
 
          return false;
       }
