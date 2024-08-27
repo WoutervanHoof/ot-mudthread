@@ -70,7 +70,6 @@
 using namespace rapidjson;
 using namespace std;
 
-
 namespace otbr {
     namespace MUD {
       std::ostringstream mud_signature;
@@ -532,7 +531,8 @@ namespace otbr {
 
          string device_ip = mf->device_ip;
          string device_ip_stripped = device_ip;
-         device_ip_stripped.erase(std::remove(device_ip_stripped.begin(), device_ip_stripped.end(), ':'), device_ip_stripped.end());
+         otbrLogInfo("device ip: %s", device_ip.c_str());
+         // device_ip_stripped.erase(std::remove(device_ip_stripped.begin(), device_ip_stripped.end(), ':'), device_ip_stripped.end());
          
          string policy = this->RandomPolicy(20);
         
@@ -591,11 +591,11 @@ namespace otbr {
                   line << " -p icmpv6";
                }
 
-               if ((e.matches.src_dnsname != NULL) && (strlen(e.matches.src_dnsname) > 0)) {
+               if ((e.matches.src_dnsname != nullptr) && (strlen(e.matches.src_dnsname) > 0)) {
                   line << " -s " << e.matches.src_dnsname;
                }
 
-               if ((e.matches.dst_dnsname != NULL) && (strlen(e.matches.dst_dnsname) > 0)) {
+               if ((e.matches.dst_dnsname != nullptr) && (strlen(e.matches.dst_dnsname) > 0)) {
                   line << " -d " << e.matches.dst_dnsname;
                }
 
@@ -636,11 +636,11 @@ namespace otbr {
                   line << " -p icmpv6";
                }
 
-               if ((e.matches.src_dnsname != NULL) && (strlen(e.matches.src_dnsname) > 0)) {
+               if ((e.matches.src_dnsname != nullptr) && (strlen(e.matches.src_dnsname) > 0)) {
                   line << " -s " << e.matches.src_dnsname;
                }
 
-               if ((e.matches.dst_dnsname != NULL) && (strlen(e.matches.dst_dnsname) > 0)) {
+               if ((e.matches.dst_dnsname != nullptr) && (strlen(e.matches.dst_dnsname) > 0)) {
                   line << " -d " << e.matches.dst_dnsname;
                }
 
