@@ -270,6 +270,8 @@ namespace otbr {
          // Start file download
          otbrLogInfo("Starting download of: %s", url.c_str());
 
+         (void*) target;
+
          return false;
       }
 
