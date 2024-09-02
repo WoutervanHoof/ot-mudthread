@@ -2,6 +2,9 @@
 
 ---
 
+# BUILDING:
+Run `MUD_MANAGER=1 INFRA_IF_NAME=wlan0 ./script/setup` on raspberry pi
+
 # OpenThread Border Router
 
 Per the [Thread Specification](http://threadgroup.org/ThreadSpec), a Thread Border Router connects a Thread network to other IP-based networks, such as Wi-Fi or Ethernet. A Thread network requires a Border Router to connect to other networks.
