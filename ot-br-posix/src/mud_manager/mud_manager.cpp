@@ -113,6 +113,7 @@ namespace otbr {
       }
 
       void MudManager::CheckMessageQueue() {
+         otbrLogInfo("WE GET HERE, checkmessagequeue");
 
          // Define variables
          
@@ -244,6 +245,7 @@ namespace otbr {
       */
       string MudManager::ParseURL(string url)
       {
+         otbrLogInfo("WE GETHERE parseulr");
          if (url.length() == 0) {
             return "";
          }
@@ -268,12 +270,13 @@ namespace otbr {
       {
          // Start file download
          otbrLogInfo("Starting download of: %s", url.c_str());
-
+      
          return false;
       }
 
       bool MudManager::ParseMUDFile(MUDFile *trgt, ostringstream* src, string ip)
       {
+         otbrLogInfo("WE GETHERER, parsemudfile");
          Document mudFileParsed;
          // Parse the JSON into an object
          mudFileParsed.Parse(src->str().c_str());

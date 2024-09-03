@@ -56,7 +56,9 @@
 #include "common/logging.hpp"
 #include "common/mainloop.hpp"
 #include "common/types.hpp"
+#if OTBR_ENABLE_MUD_MANAGER
 #include "mud_manager/mud_manager.hpp"
+#endif
 #include "ncp/ncp_openthread.hpp"
 
 static const char kSyslogIdent[]          = "otbr-agent";
@@ -281,7 +283,9 @@ static int realmain(int argc, char *argv[])
     }
 
     {
+#if OTBR_ENABLE_MUD_MANAGER
         otbr::MUD::MudManager m = otbr::MUD::MudManager();
+#endif
         otbr::Application app(interfaceName, backboneInterfaceNames, radioUrls, enableAutoAttach, restListenAddress, m.GetMessageQueue());
 
         gApp = &app;
