@@ -283,9 +283,7 @@ static int realmain(int argc, char *argv[])
     }
 
     {
-#if OTBR_ENABLE_MUD_MANAGER
         otbr::MUD::MudManager m = otbr::MUD::MudManager();
-#endif
         otbr::Application app(interfaceName, backboneInterfaceNames, radioUrls, enableAutoAttach, restListenAddress, m.GetMessageQueue());
 
         gApp = &app;

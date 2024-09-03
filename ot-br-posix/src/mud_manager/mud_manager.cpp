@@ -125,7 +125,7 @@ namespace otbr {
          char     mudIp[41];
 
          while (closeMQ == false) {
-            
+            otbrLogInfo("We also get in the loop, lets see how often this is triggered");
             if ((msg = otMessageQueueGetHead(&mq)) != nullptr) {
                otbrLogInfo("New message in queue, dequeueing...");
                otMessageQueueDequeue(&mq, msg);
