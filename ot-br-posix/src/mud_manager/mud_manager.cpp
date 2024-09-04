@@ -113,8 +113,6 @@ namespace otbr {
       }
 
       void MudManager::CheckMessageQueue() {
-         otbrLogInfo("WE GET HERE, checkmessagequeue");
-
          // Define variables
          
          otMessage* msg;
@@ -124,9 +122,12 @@ namespace otbr {
          char     mudUrl[60];
          char     mudIp[41];
 
+         // Not totaly sure if this is necesarry, but it cant hurt.
+         memset(&mudUrl, 0, sizeof mudUrl);
+         memset(&mudIp, 0, sizeof mudIp);
+
          while (closeMQ == false) {
             msg = otMessageQueueGetHead(&mq);
-            otbrLogInfo("new message: %p", msg);
             if (msg != nullptr) {
                otbrLogInfo("New message in queue, dequeueing...");
                otMessageQueueDequeue(&mq, msg);
@@ -147,7 +148,7 @@ namespace otbr {
 
                otbrLogInfo("URL Length: %d", mudUrlLength);
 
-               if ((num_bytes = otMessageRead(msg, 8, &mudUrl, mudUrlLength - 1)) <= 0) {
+               if ((num_bytes = otMessageRead(msg, 8, &mudUrl, mudUrlLength)) <= 0) {
                   otbrLogErr("Could not read message");
                   otMessageFree(msg);  
 
@@ -201,12 +202,12 @@ namespace otbr {
 
                otbrLogInfo("Parsing URL");
                mudUrlString = this->ParseURL(mudUrlString);
-               otbrLogInfo("URL Parsed");
+               otbrLogInfo("URL Parsed: %s", mudUrlString);
 
                ostringstream mud_content;
 
                if (!this->RetrieveFile(&mud_content, mudUrlString)) {
-                  otbrLogErr("Error processing MUD file");
+                  otbrLogErr("Error retreiving MUD file");
 
                   memset(&mudUrl, 0, sizeof mudUrl);
                   memset(&mudIp, 0, sizeof mudIp);
@@ -215,14 +216,14 @@ namespace otbr {
                MUDFile mf;
                
                if (!this->ParseMUDFile(&mf, &mud_content, mudIpString)) {
-                  otbrLogErr("Error processing MUD file");
+                  otbrLogErr("Error parsing MUD file");
 
                   memset(&mudUrl, 0, sizeof mudUrl);
                   memset(&mudIp, 0, sizeof mudIp);
                }
 
                if (!this->ImplementMUDfile(&mf)) {
-                  otbrLogErr("Error processing MUD file");
+                  otbrLogErr("Error implementing MUD file");
 
                   memset(&mudUrl, 0, sizeof mudUrl);
                   memset(&mudIp, 0, sizeof mudIp);
@@ -234,7 +235,7 @@ namespace otbr {
                memset(&mudIp, 0, sizeof mudIp);              
             }
 
-            sleep(1);	
+            sleep(1);
          }
       }
 
@@ -246,7 +247,6 @@ namespace otbr {
       */
       string MudManager::ParseURL(string url)
       {
-         otbrLogInfo("WE GETHERE parseulr");
          if (url.length() == 0) {
             return "";
          }
@@ -277,7 +277,6 @@ namespace otbr {
 
       bool MudManager::ParseMUDFile(MUDFile *trgt, ostringstream* src, string ip)
       {
-         otbrLogInfo("WE GETHERER, parsemudfile");
          Document mudFileParsed;
          // Parse the JSON into an object
          mudFileParsed.Parse(src->str().c_str());
