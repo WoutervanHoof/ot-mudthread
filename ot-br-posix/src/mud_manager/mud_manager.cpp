@@ -74,8 +74,8 @@ namespace otbr {
     namespace MUD {
       std::ostringstream mud_signature;
       
-      std::string file_folder = "/home/pi/ot-br-posix/mud";
-      char iptables_file[] =  "/home/pi/ot-br-posix/mud/acl.sh";
+      std::string file_folder = "$HOME/mud";
+      char iptables_file[] =  "$HOME/mud/acl.sh";
 
       static otMessageQueue mq;
       thread queueWatcher;
