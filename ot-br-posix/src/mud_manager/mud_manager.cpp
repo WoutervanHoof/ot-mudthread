@@ -74,8 +74,8 @@ namespace otbr {
     namespace MUD {
       std::ostringstream mud_signature;
       
-      std::string file_folder = "$HOME/mud";
-      char iptables_file[] =  "$HOME/mud/acl.sh";
+      std::string file_folder = "/home/wouter/mud";
+      char iptables_file[] =  "/home/wouter/mud/acl.sh";
 
       static otMessageQueue mq;
       thread queueWatcher;
@@ -647,7 +647,6 @@ namespace otbr {
                }
 
                line << " -j ACCEPT";
-
                outfile << line.str() << endl;
             }
          }
