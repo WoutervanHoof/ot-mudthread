@@ -61,7 +61,7 @@
 #include "common/code_utils.hpp"
 #include "utils/system_utils.hpp"
 
-// #include "curl/curl.h"
+#include "curl/curl.h"
 
 #include "../../third_party/rapidjson/repo/include/rapidjson/document.h"
 #include "../../third_party/rapidjson/repo/include/rapidjson/writer.h"
@@ -266,12 +266,43 @@ namespace otbr {
          return url;
       }
 
+      static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp){
+         ((std::string*)userp)->append((char*)contents, size * nmemb);
+         return size * nmemb;
+      }
 
-      bool MudManager::RetrieveFile(__attribute__((unused)) ostringstream *target, string url)
+      bool MudManager::RetrieveFile(ostringstream *target, string url)
       {
          // Start file download
          otbrLogInfo("Starting download of: %s", url.c_str());
-      
+
+         CURL *curl;
+         CURLcode res;
+         std::string readBuffer;
+
+         curl = curl_easy_init();
+         if(curl) {
+            // TODO check return codes of all funtctions
+            // This is simply the example of https://curl.se/libcurl/c/https.html
+            curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+            res = curl_easy_perform(curl);
+
+            if (res != CURLE_OK) {
+               otbrLogErr("Error: %s", curl_easy_strerror(res));
+               curl_easy_cleanup(curl);
+               curl_global_cleanup();
+               return false;
+            }
+
+            curl_easy_cleanup(curl);
+            curl_global_cleanup();
+            otbrLogInfo("succesfully downloaded file");
+            return true;
+         }
+
+         otbrLogErr("could not init curl");
          return false;
       }
 

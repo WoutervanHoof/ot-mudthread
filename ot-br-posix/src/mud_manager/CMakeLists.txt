@@ -35,4 +35,5 @@ target_link_libraries(otbr-mud-manager PRIVATE
     otbr-common
     otbr-utils
     pthread
+    curl
 )
