@@ -202,7 +202,7 @@ namespace otbr {
 
                otbrLogInfo("Parsing URL");
                mudUrlString = this->ParseURL(mudUrlString);
-               otbrLogInfo("URL Parsed: %s", mudUrlString);
+               otbrLogInfo("URL Parsed: %s", mudUrlString.c_str());
 
                ostringstream mud_content;
 
@@ -283,9 +283,13 @@ namespace otbr {
          if(curl) {
             // TODO check return codes of all funtctions
             // This is simply the example of https://curl.se/libcurl/c/https.html
+            otbrLogInfo("seting url");
             curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+            otbrLogInfo("setting callback");
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+            otbrLogInfo("setting target");
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, target);
+            otbrLogInfo("performing curl");
             res = curl_easy_perform(curl);
 
             if (res != CURLE_OK) {
