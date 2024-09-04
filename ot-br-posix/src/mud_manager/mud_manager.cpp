@@ -271,13 +271,16 @@ namespace otbr {
          return size * nmemb;
       }
 
-      bool MudManager::RetrieveFile(ostringstream *target, string url)
+      bool MudManager::RetrieveFile(__attribute__((unused)) ostringstream *target, string url)
       {
          // Start file download
          otbrLogInfo("Starting download of: %s", url.c_str());
 
          CURL *curl;
          CURLcode res;
+         curl_global_init(CURL_GLOBAL_ALL);
+
+         string readBuffer;
 
          curl = curl_easy_init();
          if(curl) {
@@ -288,9 +291,10 @@ namespace otbr {
             otbrLogInfo("setting callback");
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
             otbrLogInfo("setting target");
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, target);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
             otbrLogInfo("performing curl");
             res = curl_easy_perform(curl);
+            otbrLogInfo("performed Curl");
 
             if (res != CURLE_OK) {
                otbrLogErr("Error: %s", curl_easy_strerror(res));
@@ -301,7 +305,7 @@ namespace otbr {
 
             curl_easy_cleanup(curl);
             curl_global_cleanup();
-            otbrLogInfo("succesfully downloaded file");
+            otbrLogInfo("succesfully downloaded file: %s", readBuffer.c_str());
             return true;
          }
 
