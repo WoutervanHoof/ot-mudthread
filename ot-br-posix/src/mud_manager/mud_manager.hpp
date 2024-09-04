@@ -145,12 +145,12 @@ namespace otbr {
                  * @returns A pointer to the MUD File Content
                  * 
                 */
-                bool RetrieveFile(ostringstream *target, string url);
+                bool RetrieveFile(string *target, string url);
 
                 // /**
                 //  * Convert the MUD content into a C object
                 // */
-                bool ParseMUDFile(MUDFile *trgt, ostringstream* src, string ip);
+                bool ParseMUDFile(MUDFile *trgt, string* src, string ip);
 
                 // /**
                 //  * Create a bash script that can insert the MUD rules into ip6tables

@@ -204,7 +204,7 @@ namespace otbr {
                mudUrlString = this->ParseURL(mudUrlString);
                otbrLogInfo("URL Parsed: %s", mudUrlString.c_str());
 
-               ostringstream mud_content;
+               string mud_content;
 
                if (!this->RetrieveFile(&mud_content, mudUrlString)) {
                   otbrLogErr("Error retreiving MUD file");
@@ -271,7 +271,7 @@ namespace otbr {
          return size * nmemb;
       }
 
-      bool MudManager::RetrieveFile(__attribute__((unused)) ostringstream *target, string url)
+      bool MudManager::RetrieveFile(string *target, string url)
       {
          // Start file download
          otbrLogInfo("Starting download of: %s", url.c_str());
@@ -279,8 +279,6 @@ namespace otbr {
          CURL *curl;
          CURLcode res;
          curl_global_init(CURL_GLOBAL_ALL);
-
-         string readBuffer;
 
          curl = curl_easy_init();
          if(curl) {
@@ -291,7 +289,7 @@ namespace otbr {
             otbrLogInfo("setting callback");
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
             otbrLogInfo("setting target");
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, target);
             otbrLogInfo("performing curl");
             res = curl_easy_perform(curl);
             otbrLogInfo("performed Curl");
@@ -305,7 +303,7 @@ namespace otbr {
 
             curl_easy_cleanup(curl);
             curl_global_cleanup();
-            otbrLogInfo("succesfully downloaded file: %s", readBuffer.c_str());
+            otbrLogInfo("succesfully downloaded file: %s", target->c_str());
             return true;
          }
 
@@ -313,11 +311,11 @@ namespace otbr {
          return false;
       }
 
-      bool MudManager::ParseMUDFile(MUDFile *trgt, ostringstream* src, string ip)
+      bool MudManager::ParseMUDFile(MUDFile *trgt, string* src, string ip)
       {
          Document mudFileParsed;
          // Parse the JSON into an object
-         mudFileParsed.Parse(src->str().c_str());
+         mudFileParsed.Parse(src->c_str());
 
          // Throw error if parsing did not succeed
          if (mudFileParsed.HasParseError()) {
