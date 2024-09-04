@@ -278,7 +278,6 @@ namespace otbr {
 
          CURL *curl;
          CURLcode res;
-         std::string readBuffer;
 
          curl = curl_easy_init();
          if(curl) {
@@ -286,7 +285,7 @@ namespace otbr {
             // This is simply the example of https://curl.se/libcurl/c/https.html
             curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, target);
             res = curl_easy_perform(curl);
 
             if (res != CURLE_OK) {
