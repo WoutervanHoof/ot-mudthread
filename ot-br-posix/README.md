@@ -3,7 +3,12 @@
 ---
 
 # BUILDING:
-Run `MUD_MANAGER=1 INFRA_IF_NAME=wlan0 ./script/setup` on raspberry pi
+Run the following commands on a raspberry pi running Debian bookworm, debian 11 does not have the correct packages.
+```
+sudo apt install libcurl4-openssl-dev
+./script/bootstrap
+MUD_MANAGER=1 INFRA_IF_NAME=wlan0 ./script/setup`
+```
 
 # OpenThread Border Router
 
