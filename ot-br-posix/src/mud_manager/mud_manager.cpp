@@ -713,6 +713,7 @@ namespace otbr {
          otbrLogInfo("File Closed");
 
          SystemUtils::ExecuteCommand("chmod +x %s", file_path.c_str());
+         SystemUtils::ExecuteCommand("echo \"Hello\"");
          SystemUtils::ExecuteCommand("bash %s up", file_path.c_str());
 
          otbrLogInfo("Executed file");
